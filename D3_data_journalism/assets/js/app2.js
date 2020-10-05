@@ -53,11 +53,11 @@ var leftAxis = d3.axisLeft(yScale);
 
 //Append x and y axis
 chartGroup.append("g")
-        // .classed("axis",true)
+        // .classed("chart",true)
         .call(leftAxis);
 
 chartGroup.append("g")
-        // .classed("axis",true)
+        .classed("chart",true)
         .attr("transform",`translate(0, ${chartHeight})`)
         .call(bottomAxis);
 
@@ -73,25 +73,49 @@ var circlesGroup= chartGroup.selectAll("circle")
             .append("circle")
             .attr("cx",d => xScale(d.poverty))
             .attr("cy",d => yScale(d.healthcare))
-            .attr("r","18")
-            .attr("stroke","gray")
-            .attr("stroke-width","4")
+            .attr("r","16")
+            .attr("stroke","black")
+            .attr("stroke-width","2")
             .attr("fill","lightblue")
             .on('mouseover',function(d){
                 tip.show(d,this)})
             .on('mouseout',function(d){
-                tip.hide(d)});   
-                
- //Label the x and y axis
+                tip.hide(d)});
+            //event listener for onclick event
+            // .on("click", function(d,i) {
+            //     alert(`The average income of ${d.abbr} is ${d.income} and average age is ${d.age}!`);
+            // });
+           
 
+circlesGroup.on('mouseover',function(){
+    d3.select(this)
+        .transition()
+        .duration(500)
+        .attr("r",35)
+        .attr("fill","white"); })
+            .on('mouseout',function(){
+                d3.select(this)
+                .transition()
+                .duration(500)
+                .attr("r",16)
+                .attr("fill","lightblue"); }) 
+                
+ //Label the x axis
 chartGroup.append("text")
         .attr("transform",`translate(${chartWidth/2}, ${chartHeight+margin.top+10})`)
-        // .classed("dow-text text", true)
-        .text("POVERTY(%)");     
+        .classed("aText", true)
+        .text("POVERTY(%)");    
+        
+chartGroup.append("text")
+        .attr("transform",`translate(${chartWidth/2}, ${chartHeight+margin.top+30})`)
+        .classed("aText", true)
+        .text("AGE ")
+        .attr("fill","red");
 
+//Label the y axis
 chartGroup.append("text")
     .attr("transform",`translate(${-40}, ${chartHeight/2})rotate(-90)`)
-    // .classed("dow-text text", true)
+    .classed("aText", true)
     .text("HEALTHCARE(%)");    
     
 //Text inside the Circles
