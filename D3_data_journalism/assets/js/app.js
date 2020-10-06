@@ -37,13 +37,13 @@ d3.csv("./assets/data/data.csv").then(function(povertyData){
 
 //Create a scale for x coordinates
 var xScale = d3.scaleLinear()
-            .domain([d3.min(povertyData, d => d.poverty)-1,d3.max(povertyData, d => d.poverty)])
-            .range([0,svgWidth]);
+            .domain([d3.min(povertyData, d => d.poverty)-1,d3.max(povertyData, d => d.poverty)+2])
+            .range([0,chartWidth]);
 
 //Create a scale for y coordinates
 var yScale = d3.scaleLinear()
-            .domain([0,d3.max(povertyData, d => d.healthcare)])
-            .range([svgHeight,0]);
+            .domain([d3.min(povertyData, d => d.healthcare)-2,d3.max(povertyData, d => d.healthcare)])
+            .range([chartHeight,0]);
 
 //Create a line generator function and store as a variable
 //use the scale funcitons for x and y data
